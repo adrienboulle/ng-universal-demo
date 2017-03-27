@@ -6,8 +6,10 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 import 'rxjs/Rx';
 import * as express from 'express';
-import { platformServer, renderModuleFactory } from '@angular/platform-server';
+
+// tslint:disable-next-line
 import { ServerAppModuleNgFactory } from './ngfactory/app/server-app.module.ngfactory';
+
 import { ngExpressEngine } from './modules/ng-express-engine/express-engine';
 import { ROUTES } from './routes';
 import { App } from './api/app';
@@ -32,8 +34,8 @@ ROUTES.forEach(route => {
   app.get(route, (req, res) => {
     console.time(`GET: ${req.originalUrl}`);
     res.render('../dist/index', {
-      req: req,
-      res: res
+      req,
+      res,
     });
     console.timeEnd(`GET: ${req.originalUrl}`);
   });

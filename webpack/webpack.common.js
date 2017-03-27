@@ -6,17 +6,17 @@ const { root } = require('./helpers');
 module.exports = {
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
   output: {
-    path: root('dist')
+    path: root('dist'),
   },
   module: {
     rules: [
       { test: /\.ts$/, loader: '@ngtools/webpack' },
       { test: /\.css$/, loader: 'raw-loader' },
-      { test: /\.html$/, loader: 'raw-loader' }
-    ]
+      { test: /\.html$/, loader: 'raw-loader' },
+    ],
   },
-  plugins: []
+  plugins: [],
 };

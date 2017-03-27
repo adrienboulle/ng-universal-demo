@@ -1,19 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { TransferHttp } from '../../modules/transfer-http/transfer-http';
-import { Observable } from 'rxjs/Observable';
+import { Http } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
 
 @Component({
-	selector: 'home-view',
-	template: `<h3>{{subs | async}}</h3>`
+  selector: 'home-view',
+  template: `
+    <h3>{{subs}}</h3>
+    <input type="number" [(ngModel)]="valueA">
+    <input type="number" [(ngModel)]="valueB">
+    <span>{{valueA + valueB}}</span>
+  `
 })
 export class HomeView implements OnInit {
-  public subs: Observable<string>;
+  public subs: string;
 
-  constructor(private http: TransferHttp) {}
+  public valueA: number;
+  public valueB: number;
+
+  constructor(private _http: Http) {
+    this.valueA = 0;
+    this.valueB = 0;
+  }
 
   ngOnInit() {
-    this.subs = this.http.get('http://localhost:8000/data').map(data => {
-      return `${data.greeting} ${data.name}`;
-    });
+    this._http.get('http://localhost:8000/data')
+    .toPromise()
+    .then(rep => {
+      const data = rep.json();
+
+      this.subs =  `${data.greeting} ${data.name}`;
+   });
   }
 }

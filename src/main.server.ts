@@ -2,7 +2,6 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 import 'rxjs/Rx';
 import * as express from 'express';
-import { platformServer, renderModuleFactory } from '@angular/platform-server';
 import { ServerAppModule } from './app/server-app.module';
 import { ngExpressEngine } from './modules/ng-express-engine/express-engine';
 import { ROUTES } from './routes';
@@ -21,14 +20,14 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', 'src');
 
-app.use('/', express.static('dist', {index: false}));
+app.use('/', express.static('dist', { index: false }));
 
 ROUTES.forEach(route => {
   app.get(route, (req, res) => {
     console.time(`GET: ${req.originalUrl}`);
     res.render('../dist/index', {
-      req: req,
-      res: res
+      req,
+      res,
     });
     console.timeEnd(`GET: ${req.originalUrl}`);
   });
@@ -41,5 +40,5 @@ app.get('/data', (req, res) => {
 });
 
 app.listen(8000,() => {
-	console.log(`Listening at ${baseUrl}`);
+  console.log(`Listening at ${baseUrl}`);
 });

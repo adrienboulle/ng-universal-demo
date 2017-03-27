@@ -5,5 +5,5 @@ function root(path) {
 }
 
 module.exports = {
-  root: root
+  root,
 };
